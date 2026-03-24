@@ -1,11 +1,15 @@
 import { useState, useEffect } from "react"
 import { Link } from "react-router-dom"
+import { useContext } from "react"
+import { BudgetContext } from "../contexts/BudgetContext"
 
 export default function Products() {
 
     const api_url = 'https://fakestoreapi.com/products'
 
     const [products, setProducts] = useState([])
+
+    const { budgetMode } = useContext(BudgetContext)
 
     useEffect(() => {
         fetch(api_url)
@@ -15,10 +19,12 @@ export default function Products() {
             })
     }, [])
 
+    const filterProducts = budgetMode ? products.filter(product => product.price <= 30) : products;
+
     return (
         <div className="container">
             <div className="row g-4 mt-2">
-                {products.map(product => (
+                {filterProducts.map(product => (
                     <div className="col-12 col-md-6 col-lg-4 col-xl-3" key={product.id}>
                         <div className="card border-0" style={{ width: "18rem", minHeight: "50rem" }}>
                             <img src={product.image} className="card-img-top" style={{ objectFit: "contain" }} alt="img" />
@@ -28,7 +34,7 @@ export default function Products() {
                                 {<p className="text-muted small">{product.description.slice(0, 80)}...</p>}
                             </div>
                             <Link to={`/products/${product.id}`}>
-                            <button className="btn btn-secondary m-2">Dettagli</button>
+                                <button className="btn btn-secondary m-2">Dettagli</button>
                             </Link>
                             <div className="card-footer">{product.category}</div>
                         </div>
