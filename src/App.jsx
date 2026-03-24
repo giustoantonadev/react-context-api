@@ -11,6 +11,7 @@ import TermsPage from "./pages/TermsPage"
 import SupportPage from "./pages/SupportPage"
 import Products from "./pages/Products"
 import SingleProduct from "./pages/SingleProduct"
+import { BudgetProvider } from "./contexts/BudgetContext"
 
 
 
@@ -18,7 +19,8 @@ function App() {
 
 
   return (
-    <>
+    <BudgetProvider>
+  
       <BrowserRouter>
         <Routes>
           <Route element={<DefaultLayout />}>
@@ -37,7 +39,7 @@ function App() {
         </Routes>
       </BrowserRouter>
 
-    </>
+    </BudgetProvider>
   )
 }
 
